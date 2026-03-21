@@ -25,6 +25,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
+  "/bootstrap",
+  express.static(path.join(__dirname, "node_modules", "bootstrap", "dist"))
+);
+app.use(
   session({
     secret: "secret-key",
     resave: false,
@@ -32,9 +36,10 @@ app.use(
   })
 );
 app.use(authRoutes);
+app.use(express.static('public'));
 
 app.get("/",(req,res)=>{
-    res.send("Todoshell running");
+    res.render("index");
 });
 
 app.get("/login",(req,res)=>{
@@ -42,5 +47,5 @@ app.get("/login",(req,res)=>{
 });
 
 app.listen(3000, () =>{
-   console.log("Ser ver running on port 3000"); 
+   console.log("Server running on port 3000"); 
 });
