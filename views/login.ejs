@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | TodoShell</title>
+</head>
+<body>
+    <main>
+        <section>
+            <h1>Login</h1>
+            <p>TodoShell にログインしてください。</p>
+
+            <form action="/login" method="POST">
+                <div>
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="username"
+                        required
+                    >
+                </div>
+
+                <div>
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="password"
+                        required
+                    >
+                </div>
+
+                <button type="submit">Log in</button>
+            </form>
+
+            <p>アカウントがない場合は登録画面を用意してください。</p>
+        </section>
+    </main>
+</body>
+</html>
