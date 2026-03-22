@@ -1,44 +1,39 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | TodoShell</title>
-</head>
-<body>
-    <main>
-        <section>
-            <h1>Login</h1>
-            <p>TodoShell にログインしてください。</p>
+<%- include('partials/header', { title: 'Login' }) %>
+<%- include('partials/nav') %>
+<main class="container py-5">
+    <section class="mx-auto theme-card rounded-3 shadow-sm p-4 p-md-5 auth-card">
+        <h1 class="h2 mb-3">Login</h1>
+        <p class="mb-4">TodoShell にログインしてください。</p>
 
-            <form action="/login" method="POST">
-                <div>
-                    <label for="username">Username</label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        placeholder="username"
-                        required
-                    >
-                </div>
+        <form action="/login" method="POST" class="d-grid gap-3">
+            <div>
+                <label for="username" class="form-label">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    class="form-control"
+                    placeholder="username"
+                    required
+                >
+            </div>
 
-                <div>
-                    <label for="password">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="password"
-                        required
-                    >
-                </div>
+            <div>
+                <label for="password" class="form-label">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    class="form-control"
+                    placeholder="password"
+                    required
+                >
+            </div>
 
-                <button type="submit">Log in</button>
-            </form>
+            <button type="submit" class="btn btn-primary">Log in</button>
+        </form>
 
-            <p>アカウントがない場合は登録画面を用意してください。</p>
-        </section>
-    </main>
-</body>
-</html>
+        <p class="mt-4 mb-0 text-body-secondary">アカウントがない場合は、追加の登録画面を用意してください。</p>
+    </section>
+</main>
+<%- include('partials/footer') %>
