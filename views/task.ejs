@@ -1,34 +1,43 @@
 <%- include('partials/header', { title: 'Tasks', css: 'task.css' }) %>
 <%- include('partials/nav') %>
 <main class="container py-5">
-    <section class="theme-card rounded-3 shadow-sm p-4 p-md-5">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
-            <div>
-                <h1 class="h2 mb-2">Tasks</h1>
-                <p class="mb-0">簡易版のタスク一覧画面です。</p>
+    <section class="theme-card terminal-shell rounded-4 shadow-sm p-0 overflow-hidden">
+        <div class="terminal-topbar">
+            <div class="terminal-lights" aria-hidden="true">
+                <span class="terminal-light terminal-light-close"></span>
+                <span class="terminal-light terminal-light-minimize"></span>
+                <span class="terminal-light terminal-light-expand"></span>
             </div>
-            <button type="button" class="btn btn-primary">Add Task</button>
+            <p class="terminal-title mb-0">todoshell@workspace: ~/tasks</p>
         </div>
 
-        <% if (tasks && tasks.length > 0) { %>
-            <ul class="task-list">
-                <% tasks.forEach((task) => { %>
-                    <li class="task-item rounded-3 p-3 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-                        <div>
-                            <h2 class="h5 mb-1"><%= task.title %></h2>
-                            <p class="mb-0"><%= task.completed ? '完了済みのタスクです。' : '未完了のタスクです。' %></p>
-                        </div>
-                        <span class="task-status badge <%= task.completed ? 'text-bg-success' : 'text-bg-secondary' %>">
-                            <%= task.completed ? 'Completed' : 'Pending' %>
-                        </span>
-                    </li>
-                <% }) %>
-            </ul>
-        <% } else { %>
-            <div class="rounded-3 border p-4 text-center">
-                <p class="mb-0">表示できるタスクがまだありません。</p>
+        <div class="terminal-body p-4 p-md-5">
+            <div class="terminal-screen" id="terminalScreen" aria-live="polite">
+                <div class="terminal-entry">
+                    <p class="terminal-line mb-2">
+                        <span class="terminal-prompt"><%= user ? user.username : 'guest' %>@todoshell:~/tasks$</span>
+                        <span class="terminal-command">help</span>
+                    </p>
+                    <p class="terminal-output mb-0">Type a command and press Enter. Try <code>help</code>, <code>tasks --list</code>, <code>tasks add "Buy coffee"</code>, <code>tasks --filter pending</code>, or <code>clear</code>.</p>
+                </div>
             </div>
-        <% } %>
+
+            <form class="terminal-input-row" id="terminalForm" autocomplete="off">
+                <label class="terminal-prompt mb-0" for="terminalInput"><%= user ? user.username : 'guest' %>@todoshell:~/tasks$</label>
+                <input
+                    id="terminalInput"
+                    class="terminal-input"
+                    name="command"
+                    type="text"
+                    spellcheck="false"
+                    placeholder='Try: tasks add "Buy coffee"'
+                    autofocus
+                >
+            </form>
+        </div>
     </section>
 </main>
+
+<script id="taskAppData" type="application/json"><%- JSON.stringify({ tasks: tasks || [], username: user ? user.username : "guest" }) %></script>
+<script src="/js/task-cli.js"></script>
 <%- include('partials/footer') %>

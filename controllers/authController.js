@@ -15,6 +15,9 @@ exports.register = async (req, res) => {
         await user.save();
 
         req.session.userId = user._id;
+        req.session.user = {
+            username: user.username
+        };
 
         res.redirect("/tasks");
     }catch(err){
@@ -48,6 +51,9 @@ exports.login = async(req,res) => {
         }
 
         req.session.userId = user._id;
+        req.session.user = {
+            username: user.username
+        };
 
         res.redirect("/tasks");
     }catch(err){

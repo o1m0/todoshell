@@ -1,9 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const session = require("express-session");
 const path = require("path");
-const authRoutes = require("./routes/auth");
-const { requireLogin } = require("./middleware/auth");
+const registerMiddleware = require("./config/registerMiddleware");
+const registerRoutes = require("./config/registerRoutes");
 
 require("dotenv").config({
   path: "./config/.env"
@@ -26,50 +25,8 @@ if (process.env.MONGO_URL) {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
-app.use(
-    "/bootstrap",
-    express.static(path.join(__dirname, "node_modules", "bootstrap", "dist"))
-);
-app.use(
-    session({
-        secret: "secret-key",
-        resave: false,
-        saveUninitialized: false,
-    })
-);
-app.use(authRoutes);
-
-app.use((req, res, next) => {
-  res.locals.userId = req.session.userId || null;
-  next();
-});
-
-app.get("/", (req, res) => {
-    res.render("index");
-});
-
-app.get("/login", (req, res) => {
-    const flash = req.session.flash;
-    delete req.session.flash;
-    res.render("login", { flash });
-});
-
-app.get("/register", (req, res) => {
-    res.render("register");
-}); 
-
-app.get("/tasks", requireLogin, (req, res) => {
-    const tasks = [
-        { title: "買い物リストを作る", completed: false },
-        { title: "TodoShell にログインする", completed: true },
-        { title: "タスク画面を確認する", completed: false },
-    ];
-
-    res.render("task", { tasks });
-});
+registerMiddleware(app);
+registerRoutes(app);
 
 app.listen(3000, () => {
     console.log("Server running on port 3000");
