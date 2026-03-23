@@ -1,6 +1,11 @@
 html,
 body {
+    min-height: 100%;
     transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+body {
+    min-height: 100vh;
 }
 
 html[data-theme="light"] {

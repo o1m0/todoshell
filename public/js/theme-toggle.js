@@ -1,9 +1,11 @@
+const root = document.documentElement;
 const body = document.body;
 const themeToggle = document.getElementById("themeToggle");
 const themeNavbar = document.getElementById("themeNavbar");
 const themeToggleIcon = themeToggle?.querySelector(".theme-toggle-icon");
 
 function applyTheme(theme) {
+    root.setAttribute("data-theme", theme);
     body.setAttribute("data-theme", theme);
 
     if (themeToggle) {
