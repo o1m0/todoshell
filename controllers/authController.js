@@ -14,7 +14,9 @@ exports.register = async (req, res) => {
 
         await user.save();
 
-        res.send("User registered");
+        req.session.userId = user._id;
+
+        res.redirect("/tasks");
     }catch(err){
         console.log(err);
         res.status(500).send("Register error");
@@ -28,25 +30,40 @@ exports.login = async(req,res) => {
         const user = await User.findOne({ username });
 
         if(!user){
-            return res.send("User not found");
+            req.session.flash = {
+                type: "error",
+                message: "ユーザーが見つかりません",
+            };
+            return res.redirect("/login");
         }
 
         const valid = await bcrypt.compare(password,user.password);
 
         if(!valid){
-            return res.send("Wrong password");
+            req.session.flash = {
+                type: "error",
+                message: "パスワードが間違っています",
+            };
+            return res.redirect("/login");
         }
 
         req.session.userId = user._id;
 
-        res.send("Login success");
+        res.redirect("/tasks");
     }catch(err){
             console.log(err);
             res.status(500).send("Login error");
     }
 };
 
-exports.logout = (req,res) =>{
-    req.session.destroy();
-    res.send("Logged out")
-}
+exports.logout = (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send("Logout error");
+        }
+
+        res.clearCookie("connect.sid");
+        res.redirect("/login");
+    });
+};

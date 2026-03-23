@@ -1,0 +1,34 @@
+<%- include('partials/header', { title: 'Tasks', css: 'task.css' }) %>
+<%- include('partials/nav') %>
+<main class="container py-5">
+    <section class="theme-card rounded-3 shadow-sm p-4 p-md-5">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+            <div>
+                <h1 class="h2 mb-2">Tasks</h1>
+                <p class="mb-0">簡易版のタスク一覧画面です。</p>
+            </div>
+            <button type="button" class="btn btn-primary">Add Task</button>
+        </div>
+
+        <% if (tasks && tasks.length > 0) { %>
+            <ul class="task-list">
+                <% tasks.forEach((task) => { %>
+                    <li class="task-item rounded-3 p-3 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                        <div>
+                            <h2 class="h5 mb-1"><%= task.title %></h2>
+                            <p class="mb-0"><%= task.completed ? '完了済みのタスクです。' : '未完了のタスクです。' %></p>
+                        </div>
+                        <span class="task-status badge <%= task.completed ? 'text-bg-success' : 'text-bg-secondary' %>">
+                            <%= task.completed ? 'Completed' : 'Pending' %>
+                        </span>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } else { %>
+            <div class="rounded-3 border p-4 text-center">
+                <p class="mb-0">表示できるタスクがまだありません。</p>
+            </div>
+        <% } %>
+    </section>
+</main>
+<%- include('partials/footer') %>

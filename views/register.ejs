@@ -1,17 +1,11 @@
-<%- include('partials/header', { title: 'Login' }) %>
+<%- include('partials/header', { title: 'Register' }) %>
 <%- include('partials/nav') %>
 <main class="container py-5">
     <section class="mx-auto theme-card rounded-3 shadow-sm p-4 p-md-5 auth-card">
-        <h1 class="h2 mb-3">Login</h1>
-        <p class="mb-4">TodoShell にログインしてください。</p>
+        <h1 class="h2 mb-3">Register</h1>
+        <p class="mb-4">TodoShell のアカウントを作成してください。</p>
 
-        <% if (flash && flash.message) { %>
-            <div class="alert alert-warning" role="alert">
-                <%= flash.message %>
-            </div>
-        <% } %>
-
-        <form action="/login" method="POST" class="d-grid gap-3">
+        <form action="/register" method="POST" class="d-grid gap-3">
             <div>
                 <label for="username" class="form-label">Username</label>
                 <input
@@ -36,12 +30,12 @@
                 >
             </div>
 
-            <button type="submit" class="btn btn-primary">Log in</button>
+            <button type="submit" class="btn btn-primary">Create account</button>
         </form>
 
         <p class="mb-0 auth-helper-text">
-            アカウントがない場合は
-            <a href="/register" class="auth-link">登録ページへ</a>
+            すでにアカウントがある場合は
+            <a href="/login" class="auth-link">ログインページへ</a>
         </p>
     </section>
 </main>
