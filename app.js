@@ -3,8 +3,11 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const path = require("path");
 const authRoutes = require("./routes/auth");
+const { requireLogin } = require("./middleware/auth");
 
-require("dotenv").config();
+require("dotenv").config({
+  path: "./config/.env"
+});
 
 const app = express();
 
@@ -39,12 +42,33 @@ app.use(
 );
 app.use(authRoutes);
 
+app.use((req, res, next) => {
+  res.locals.userId = req.session.userId || null;
+  next();
+});
+
 app.get("/", (req, res) => {
     res.render("index");
 });
 
 app.get("/login", (req, res) => {
-    res.render("login");
+    const flash = req.session.flash;
+    delete req.session.flash;
+    res.render("login", { flash });
+});
+
+app.get("/register", (req, res) => {
+    res.render("register");
+}); 
+
+app.get("/tasks", requireLogin, (req, res) => {
+    const tasks = [
+        { title: "買い物リストを作る", completed: false },
+        { title: "TodoShell にログインする", completed: true },
+        { title: "タスク画面を確認する", completed: false },
+    ];
+
+    res.render("task", { tasks });
 });
 
 app.listen(3000, () => {

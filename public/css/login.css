@@ -1,0 +1,11 @@
+.auth-card {
+    max-width: 480px;
+}
+
+body[data-theme="light"] .auth-card p {
+    color: #495057 !important;
+}
+
+body[data-theme="dark"] .auth-card p {
+    color: #ffffff !important;
+}
